@@ -1,6 +1,6 @@
 use ggez::event;
 use ggez::graphics::{self, Color, DrawMode, Rect};
-use ggez::input::keyboard::KeyCode;
+use ggez::input::keyboard::{self, KeyCode};
 use ggez::{Context, GameResult};
 
 const WINDOW_WIDTH: f32 = 800.0;
@@ -25,16 +25,16 @@ impl MainState {
 
 impl event::EventHandler for MainState {
     fn update(&mut self, ctx: &mut Context) -> GameResult {
-        if ctx.keyboard.is_key_pressed(KeyCode::Left) && self.square_x > 0.0 {
+        if keyboard::is_key_pressed(ctx, KeyCode::Left) && self.square_x > 0.0 {
             self.square_x -= SQUARE_SPEED;
         }
-        if ctx.keyboard.is_key_pressed(KeyCode::Right) && self.square_x < WINDOW_WIDTH - SQUARE_SIZE {
+        if keyboard::is_key_pressed(ctx, KeyCode::Right) && self.square_x < WINDOW_WIDTH - SQUARE_SIZE {
             self.square_x += SQUARE_SPEED;
         }
-        if ctx.keyboard.is_key_pressed(KeyCode::Up) && self.square_y > 0.0 {
+        if keyboard::is_key_pressed(ctx, KeyCode::Up) && self.square_y > 0.0 {
             self.square_y -= SQUARE_SPEED;
         }
-        if ctx.keyboard.is_key_pressed(KeyCode::Down) && self.square_y < WINDOW_HEIGHT - SQUARE_SIZE {
+        if keyboard::is_key_pressed(ctx, KeyCode::Down) && self.square_y < WINDOW_HEIGHT - SQUARE_SIZE {
             self.square_y += SQUARE_SPEED;
         }
         Ok(())
@@ -52,12 +52,10 @@ impl event::EventHandler for MainState {
         Ok(())
     }
 }
-
 pub fn main() -> GameResult {
     let cb = ggez::ContextBuilder::new("basic_game", "ggez")
         .window_setup(ggez::conf::WindowSetup::default().title("Basic Rust Game Window"))
-        .window_mode(ggez::conf::WindowMode::default().dimensions(WINDOW_WIDTH, WINDOW_HEIGHT))
-        .backend(ggez::conf::Backend::OpenGL); // Explicitly choose OpenGL
+        .window_mode(ggez::conf::WindowMode::default().dimensions(WINDOW_WIDTH, WINDOW_HEIGHT));
 
     let (ctx, event_loop) = cb.build()?;
     let state = MainState::new()?;
