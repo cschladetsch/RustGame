@@ -11,8 +11,8 @@ This project is a simple Rust implementation of a game window using the `ggez` l
 
 1. Clone this repository:
    ```
-   git clone ${TODO}
-   cd rust_game
+   git clone git@github.com:cschladetsch/RustGame.git
+   cd RustGame
    ```
 
 2. Ensure you have the latest stable version of Rust:
